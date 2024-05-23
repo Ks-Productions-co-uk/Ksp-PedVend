@@ -1,5 +1,5 @@
 Ksp-PedVend V1.0
-Features and Benefits:
+Features:
 
 
 Player Interaction: Enables players to interact with NPC Vendors to sell items seamlessly.
@@ -33,6 +33,4 @@ Clean Resource Management: Automatically cleans up objects and blips when the re
 - Open your server configuration file (`server.cfg`).
 - Add the following line to ensure the script is started when the server launches: `Ksp-PedVend`
 
-
-#### [Follow me for more free scripts!] (https://discord.gg/ks-productions) ####
 
