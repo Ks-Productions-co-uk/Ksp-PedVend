@@ -31,15 +31,14 @@ end
 function OpenMainMenu()
     local mainMenuOptions = {
         {
-            header = "<i class='fas fa-cash-register'></i> Selling Menu",
+            header = "Selling Menu",
             isMenuHeader = true
         }
     }
 
     for category, items in pairs(Items) do
-        local icon = items[1] and items[1].icon or "fa-box"
         table.insert(mainMenuOptions, {
-            header = string.format("<i class='fas %s'></i><span style='margin-left: 10px;'>%s</span>", icon, category),
+            header = string.format("<span style='margin-left: 10px;'>%s</span>", category),
             params = {
                 event = "ksp-pedvend:openCategoryMenu",
                 args = {
@@ -50,7 +49,7 @@ function OpenMainMenu()
     end
 
     table.insert(mainMenuOptions, {
-        header = "<i class='fas fa-times'></i><span style='margin-left: 10px;'>Close Menu</span>",
+        header = "<span style='margin-left: 10px;'>Close Menu</span>",
         params = {
             event = "ksp-pedvend:closeMenu"
         }
@@ -62,7 +61,7 @@ end
 function OpenCategoryMenu(category)
     local categoryMenuOptions = {
         {
-            header = "<i class='fas fa-arrow-left'></i><span style='margin-left: 10px;'>Back to Main Menu</span>",
+            header = "<span style='margin-left: 10px;'>Back to Main Menu</span>",
             params = {
                 event = "ksp-pedvend:openMainMenu"
             }
@@ -71,7 +70,7 @@ function OpenCategoryMenu(category)
 
     for _, item in ipairs(Items[category]) do
         table.insert(categoryMenuOptions, {
-            header = string.format("<i class='fas %s'></i><span style='margin-left: 10px;'>%s - $%s</span>", item.icon, item.label, item.price),
+            header = string.format("<span style='margin-left: 10px;'>%s - $%s</span>", item.label, item.price),
             params = {
                 event = "ksp-pedvend:selectQuantity",
                 args = {
@@ -82,7 +81,7 @@ function OpenCategoryMenu(category)
     end
 
     table.insert(categoryMenuOptions, {
-        header = "<i class='fas fa-times'></i><span style='margin-left: 10px;'>Close Menu</span>",
+        header = "<span style='margin-left: 10px;'>Close Menu</span>",
         params = {
             event = "ksp-pedvend:closeMenu"
         }
@@ -244,7 +243,8 @@ Citizen.CreateThread(function()
             distance = 2.5
         })
 
-        if location.blip then
+        if Config.ShowBlips and location.blip then
+            print("Creating blip for location: " .. location.blip.label)  -- Debug print
             local blip = AddBlipForCoord(location.coords.x, location.coords.y, location.coords.z)
             SetBlipSprite(blip, location.blip.sprite)
             SetBlipDisplay(blip, 4)
@@ -254,6 +254,8 @@ Citizen.CreateThread(function()
             BeginTextCommandSetBlipName("STRING")
             AddTextComponentString(location.blip.label)
             EndTextCommandSetBlipName(blip)
+        else
+            print("Blip creation skipped for location: " .. location.coords.x .. ", " .. location.coords.y)  -- Debug print
         end
 
         table.insert(currentObjects, object)
