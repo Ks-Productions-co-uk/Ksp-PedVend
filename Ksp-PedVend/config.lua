@@ -1,4 +1,5 @@
 Config = {}
+Config.ShowBlips = true -- Toggle this to true or false to show/hide blips
 Config.SellCooldown = 60 -- Cooldown in seconds
 Config.SellLocations = {
     {
